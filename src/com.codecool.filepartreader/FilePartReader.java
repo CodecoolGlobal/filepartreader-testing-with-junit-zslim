@@ -1,5 +1,9 @@
 package com.codecool.filepartreader;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 class FilePartReader {
     private String filePath;
     private Integer fromLine;
@@ -11,10 +15,10 @@ class FilePartReader {
         this.toLine = 0;
     }
 
-    public void setup(String filePath, Integer fromLine, Integer toLine) {
+    public void setup(String filePath, Integer fromLine, Integer toLine) throws IllegalArgumentException {
 
         if (toLine < fromLine || fromLine < 1) {
-            throw IllegalArgumentException; // TODO: how to properly throw exceptions?
+            throw new IllegalArgumentException("toLine must be larger than fromLine");
         }
 
         this.filePath = filePath;
@@ -22,14 +26,23 @@ class FilePartReader {
         this.toLine = toLine;
     }
 
-    public String read() {
-        // TODO: look up how to handle files
-        String text = "";
-        return text;
+    public String read() throws FileNotFoundException {
+        File file = new File(filePath);
+        Scanner sc = new Scanner(file);
+        StringBuilder sb = new StringBuilder();
+        while (sc.hasNext()) {
+            sb.append(sc.next());
+        }
+        return sb.toString();
     }
 
     public String readLines() {
-        String wholeFile = read();
+        try {
+            String wholeFile = read();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
 
         StringBuilder sb = new StringBuilder();
         // TODO: iterate through lines and get the appropriate ones
