@@ -19,7 +19,7 @@ class FilePartReader {
     public void setup(String filePath, Integer fromLine, Integer toLine) throws IllegalArgumentException {
 
         if (toLine < fromLine || fromLine < 1) {
-            throw new IllegalArgumentException("toLine must be larger than fromLine");
+            throw new IllegalArgumentException("toLine must be greater than fromLine; fromLine must be greater than 0");
         }
 
         this.filePath = filePath;
@@ -47,12 +47,15 @@ class FilePartReader {
         }
 
         String[] allLines = wholeFile.split("\n");
-        StringBuilder sb = new StringBuilder();
+        if (toLine > allLines.length) {
+            toLine = allLines.length;
+        }
+        StringJoiner sj = new StringJoiner("\n");
 
         for (int i = fromLine; i <= toLine; i++) {
-            sb.append(allLines[i]);
+            sj.add(allLines[i - 1]);
         }
 
-        return sb.toString();
+        return sj.toString();
     }
 }
