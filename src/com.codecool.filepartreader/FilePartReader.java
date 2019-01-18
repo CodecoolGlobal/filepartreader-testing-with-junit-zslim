@@ -38,15 +38,20 @@ class FilePartReader {
     }
 
     public String readLines() {
+        String wholeFile = null;
         try {
-            String wholeFile = read();
+            wholeFile = read();
         }
         catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
+            return e.getMessage();
         }
 
+        String[] allLines = wholeFile.split("\n");
         StringBuilder sb = new StringBuilder();
-        // TODO: iterate through lines and get the appropriate ones
+
+        for (int i = fromLine; i <= toLine; i++) {
+            sb.append(allLines[i]);
+        }
 
         return sb.toString();
     }
