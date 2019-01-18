@@ -3,6 +3,7 @@ package com.codecool.filepartreader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.StringJoiner;
 
 class FilePartReader {
     private String filePath;
@@ -29,11 +30,11 @@ class FilePartReader {
     public String read() throws FileNotFoundException {
         File file = new File(filePath);
         Scanner sc = new Scanner(file);
-        StringBuilder sb = new StringBuilder();
-        while (sc.hasNext()) {
-            sb.append(sc.next());
+        StringJoiner sj = new StringJoiner("\n");
+        while (sc.hasNextLine()) {
+            sj.add(sc.nextLine());
         }
-        return sb.toString();
+        return sj.toString();
     }
 
     public String readLines() {
